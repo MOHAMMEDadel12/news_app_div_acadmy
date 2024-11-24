@@ -1,13 +1,21 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/app/control/auth_cubit/auth_cubit.dart';
-import 'package:news_app/app/control/auth_cubit/auth_states.dart';
-import 'package:news_app/app/view/login_screen/login_screen.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:news_app/app/news_app/control/auth_cubit/auth_cubit.dart';
+import 'package:news_app/app/news_app/control/auth_cubit/auth_states.dart';
+import 'package:news_app/app/news_app/view/login_screen/login_screen.dart';
 import 'package:news_app/core/helpers/app_validators.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
 
@@ -33,6 +41,34 @@ class RegisterScreen extends StatelessWidget {
             builder: (context, state) {
               return Column(
                 children: [
+
+                  Row(
+                    children: [
+                      Container(
+                        height: 100,
+                        width: 100,
+                        color: Colors.grey,
+                        child: AuthCubit.get(context).selectedImage != null
+                            ? Image.file(
+                                AuthCubit.get(context).selectedImage!,
+                                fit: BoxFit.cover,
+                              )
+                            : const Icon(Icons.person, size: 50),
+                      ),
+                      IconButton(onPressed: () {
+
+                        ImagePicker().pickImage(source: ImageSource.camera).then((value) {
+                          print("image is selected");
+                          setState(() {
+                            AuthCubit.get(context).selectedImage = File(value!.path);
+                          });
+                         print("image is selected ${value!.path}");
+                        });
+                        
+                      
+                      }, icon: const Icon(Icons.camera))
+                    ],
+                  ),
                 TextFormField(
                   controller: AuthCubit.get(context).nameController,
                   
@@ -67,7 +103,7 @@ class RegisterScreen extends StatelessWidget {
                       return ElevatedButton(
                         onPressed: () {
                       if (AuthCubit.get(context).formKeyRegister.currentState!.validate()) {
-                        AuthCubit.get(context).register();
+                        AuthCubit.get(context).registerWithFirebase(selectedImage: AuthCubit.get(context).selectedImage!);
                       }
                     },
                     child: const Text('Register'),

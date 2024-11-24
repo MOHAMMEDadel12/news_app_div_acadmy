@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/app/control/home_cubit/home_cubit.dart';
-import 'package:news_app/app/control/home_cubit/home_states.dart';
-import 'package:news_app/app/view/widgets/news_item_widget.dart';
+import 'package:news_app/app/news_app/control/home_cubit/home_cubit.dart';
+import 'package:news_app/app/news_app/control/home_cubit/home_states.dart';
+import 'package:news_app/app/news_app/view/widgets/news_item_widget.dart';
 
 class SportsScreen extends StatefulWidget {
   const SportsScreen({super.key});
