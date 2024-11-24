@@ -29,6 +29,11 @@ class _UserChatsScreenState extends State<UserChatsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Chats"),
+
+      //
+      //
+      
+
         actions: [
           IconButton(onPressed: (){
             CasheHelper.clearSharedPreferences();
