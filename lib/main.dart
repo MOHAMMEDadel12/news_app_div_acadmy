@@ -23,7 +23,7 @@ void main() async {
   DioHelper.init();
   await CasheHelper.init();
   String? token = CasheHelper.getUserToken();
-  runApp(MyApp(token: token!));
+  runApp(MyApp(token: token ?? ""));
 }
 
 class MyApp extends StatelessWidget {
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: token == null ? RegisterScreen() : UserChatsScreen(),
+        home: token == "" ? RegisterScreen() : UserChatsScreen(),
       ),
     );
   }

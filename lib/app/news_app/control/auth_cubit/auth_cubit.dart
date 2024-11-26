@@ -161,4 +161,9 @@ class AuthCubit extends Cubit<AuthStates> {
           CustomException(message: "some thing went wrong please try again")));
     }
   }
+
+
+updateLastSeen() async {
+  await FirebaseFirestore.instance.collection("users").doc(CasheHelper.getUserToken()).update({"lastSeen": DateTime.now()});
+}
 }
